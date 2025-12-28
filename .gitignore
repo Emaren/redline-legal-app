@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.envrc
+.direnv/
+.python-version
+
+# Local env / tooling
+.conda-env
+venv-logs/
+bin/
+requirements.txt
