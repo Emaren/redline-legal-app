@@ -14,7 +14,7 @@ export default function AdminPage() {
     <SiteShell>
       <PagePanel
         title="Admin Workspace"
-        intro="This page is now directly accessible from navigation. Authentication is not added yet, so treat this as a staging admin surface until we lock access."
+        intro="This page is directly accessible from navigation and currently protected with temporary nginx basic auth while we implement in-app auth."
       >
         <section className="section-stack">
           <h2 className="section-heading">Operational checklist</h2>
