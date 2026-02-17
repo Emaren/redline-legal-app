@@ -1,16 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { HEADER_NAV_ROUTES } from "@/config/site-routes";
 import { ThemePicker } from "./theme-picker";
-
-const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/resources", label: "Resources" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
 
 export function SiteShell({ children }: { children: ReactNode }) {
   return (
@@ -19,7 +11,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         <Link href="/" className="brand" aria-label="Redline Legal Home">
           <span className="brand-mark">
             <Image
-              src="/redline-logo-transparent.png"
+              src="/branding/redline-logo-original-transparent.png"
               alt="Redline Legal logo"
               width={60}
               height={60}
@@ -36,7 +28,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         </Link>
 
         <nav className="main-nav" aria-label="Primary navigation">
-          {NAV_LINKS.map((item) => (
+          {HEADER_NAV_ROUTES.map((item) => (
             <Link className="nav-link" href={item.href} key={item.href}>
               {item.label}
             </Link>
@@ -50,9 +42,17 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
       <footer className="site-footer">
         <p>&copy; {new Date().getFullYear()} Redline Legal. All rights reserved.</p>
-        <a className="footer-link" href="mailto:contact@redlinelegal.ca">
-          contact@redlinelegal.ca
-        </a>
+        <div className="footer-links">
+          <Link className="footer-link" href="/admin">
+            Admin
+          </Link>
+          <a className="footer-link" href="/Manage-Cookies.php">
+            Manage Cookies
+          </a>
+          <a className="footer-link" href="mailto:contact@redlinelegal.ca">
+            contact@redlinelegal.ca
+          </a>
+        </div>
       </footer>
     </div>
   );

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { INTERNAL_PAGE_ROUTES } from "@/config/site-routes";
 import { PagePanel } from "@/components/page-panel";
 import { SiteShell } from "@/components/site-shell";
 
@@ -50,6 +51,18 @@ export default function Home() {
               <li key={item}>{item}</li>
             ))}
           </ul>
+        </section>
+
+        <section className="section-stack">
+          <h2 className="section-heading">Everything currently available</h2>
+          <div className="link-grid">
+            {INTERNAL_PAGE_ROUTES.map((route) => (
+              <Link className="link-card" href={route.href} key={route.href}>
+                <strong>{route.label}</strong>
+                <span>{route.description}</span>
+              </Link>
+            ))}
+          </div>
         </section>
 
         <div className="cta-row">
