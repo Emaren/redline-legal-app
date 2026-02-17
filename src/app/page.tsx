@@ -1,49 +1,66 @@
-import Image from "next/image";
+import Link from "next/link";
+import { PagePanel } from "@/components/page-panel";
+import { SiteShell } from "@/components/site-shell";
+
+const HIGHLIGHTS = [
+  {
+    title: "Document drafting",
+    body: "Demand letters, declarations, and filings prepared with plain-language review.",
+  },
+  {
+    title: "Case organization",
+    body: "Evidence, timelines, and exhibits arranged so you can present clearly in court.",
+  },
+  {
+    title: "Court process support",
+    body: "Step-by-step help with filing tasks, deadlines, and procedural prep.",
+  },
+  {
+    title: "Small business operations",
+    body: "Contracts, notices, and routine legal workflows tailored to founder-level teams.",
+  },
+];
+
+const SUPPORT_ITEMS = [
+  "Clear, fixed-scope support instead of open-ended billable hours.",
+  "Tools and workflows built for self-represented litigants.",
+  "A practical handoff path when attorney review becomes necessary.",
+];
 
 export default function Home() {
   return (
-    <div className="font-sans min-h-screen bg-white text-black dark:bg-zinc-900 dark:text-white p-8 sm:p-20 flex flex-col items-center justify-center gap-12">
-      <header className="text-center">
-        <Image
-          src="/redline-legal.png"
-          alt="Redline Legal logo"
-          width={1024}
-          height={1024}
-          priority
-          className="mx-auto mb-6 h-auto w-40 sm:w-52"
-        />
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-          Redline Legal
-        </h1>
-        <p className="mt-4 text-lg sm:text-xl text-zinc-600 dark:text-zinc-400">
-          Legal Support Services for Self-Represented Litigants & Small Business
-        </p>
-      </header>
-
-      <main className="max-w-2xl text-center space-y-6">
-        <p className="text-base sm:text-lg">
-          We help you navigate the legal system by offering document preparation,
-          court filing assistance, and litigation support — without the high cost
-          of traditional legal representation.
-        </p>
-        <ul className="list-disc list-inside text-left text-zinc-700 dark:text-zinc-300">
-          <li>Small Claims & Civil Filing Support</li>
-          <li>Demand Letters & Legal Drafting</li>
-          <li>Research & Case Organization</li>
-          <li>Affordable, Flat-Rate Services</li>
-        </ul>
-      </main>
-
-      <a
-        href="mailto:contact@redlinelegal.ca"
-        className="mt-4 bg-black text-white dark:bg-white dark:text-black px-6 py-3 rounded-full text-sm sm:text-base hover:opacity-90 transition"
+    <SiteShell>
+      <PagePanel
+        title="Court-ready support built for people without a full legal team."
+        intro="Redline Legal helps you prepare filings, organize your case materials, and move through legal process work with less friction and clearer structure."
       >
-        Contact Us
-      </a>
+        <div className="home-grid">
+          {HIGHLIGHTS.map((item) => (
+            <article className="info-card" key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))}
+        </div>
 
-      <footer className="text-sm text-zinc-500 dark:text-zinc-400 mt-12">
-        &copy; {new Date().getFullYear()} Redline Legal. All rights reserved.
-      </footer>
-    </div>
+        <section className="section-stack">
+          <h2 className="section-heading">Why clients start here</h2>
+          <ul className="bullet-list">
+            {SUPPORT_ITEMS.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </section>
+
+        <div className="cta-row">
+          <Link href="/services" className="cta-button">
+            Browse Services
+          </Link>
+          <Link href="/contact" className="cta-button alt">
+            Start Intake
+          </Link>
+        </div>
+      </PagePanel>
+    </SiteShell>
   );
 }
