@@ -3,7 +3,7 @@ import { PagePanel } from "@/components/page-panel";
 import { SiteShell } from "@/components/site-shell";
 
 const COOKIE_ITEMS = [
-  "Open the manager route to review or revoke non-essential cookies.",
+  "Use this page to review or revoke non-essential cookies.",
   "Use this page as the canonical cookie-controls entry in your UI.",
   "Keep policy text and consent behavior aligned with your production banner.",
 ];
@@ -25,9 +25,9 @@ export default function CookiesPage() {
         </section>
 
         <div className="cta-row">
-          <a className="cta-button" href="/Manage-Cookies.php">
-            Launch Cookie Manager
-          </a>
+          <Link className="cta-button" href="/cookies">
+            Refresh Cookie Preferences
+          </Link>
           <Link className="cta-button alt" href="/admin">
             Back to Admin
           </Link>

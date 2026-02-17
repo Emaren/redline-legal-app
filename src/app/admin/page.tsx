@@ -38,9 +38,9 @@ export default function AdminPage() {
         </section>
 
         <div className="cta-row">
-          <a className="cta-button" href="/Manage-Cookies.php">
-            Open Cookie Manager
-          </a>
+          <Link className="cta-button" href="/cookies">
+            Open Cookie Controls
+          </Link>
           <Link className="cta-button alt" href="/chat">
             Open Chat Route
           </Link>

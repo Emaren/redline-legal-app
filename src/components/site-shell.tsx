@@ -46,9 +46,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <Link className="footer-link" href="/admin">
             Admin
           </Link>
-          <a className="footer-link" href="/Manage-Cookies.php">
+          <Link className="footer-link" href="/cookies">
             Manage Cookies
-          </a>
+          </Link>
           <a className="footer-link" href="mailto:contact@redlinelegal.ca">
             contact@redlinelegal.ca
           </a>
