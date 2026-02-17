@@ -4,6 +4,14 @@ export default function Home() {
   return (
     <div className="font-sans min-h-screen bg-white text-black dark:bg-zinc-900 dark:text-white p-8 sm:p-20 flex flex-col items-center justify-center gap-12">
       <header className="text-center">
+        <Image
+          src="/redline-legal.png"
+          alt="Redline Legal logo"
+          width={1024}
+          height={1024}
+          priority
+          className="mx-auto mb-6 h-auto w-40 sm:w-52"
+        />
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
           Redline Legal
         </h1>
