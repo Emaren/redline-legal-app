@@ -37,6 +37,11 @@ export const SITE_ROUTES: SiteRoute[] = [
     inHeaderNav: true,
   },
   {
+    href: "/chat-admin",
+    label: "Chat Admin",
+    description: "Combined console for chat and admin workflow handoff.",
+  },
+  {
     href: "/admin",
     label: "Admin",
     description: "Operations and content management workspace.",
