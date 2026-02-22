@@ -87,14 +87,12 @@ export default function ChatAdminPage() {
     }
   }, [historyUrl]);
 
-  // Load + poll session list
   useEffect(() => {
     fetchSessions();
     const t = window.setInterval(fetchSessions, 6000);
     return () => window.clearInterval(t);
   }, [fetchSessions]);
 
-  // Load + poll messages for selected session
   useEffect(() => {
     if (!selectedSession) return;
     fetchMessages();
@@ -102,7 +100,6 @@ export default function ChatAdminPage() {
     return () => window.clearInterval(t);
   }, [selectedSession, fetchMessages]);
 
-  // Auto-scroll on new messages
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -144,7 +141,6 @@ export default function ChatAdminPage() {
         title="Chat Admin Console"
         intro="Sessions on the left, thread on the right. Admin messages are LEFT/blue. User messages are RIGHT/green."
       >
-        {/* Keep the new “block” look */}
         <div className="detail-grid">
           {CHAT_ADMIN_BLOCKS.map((block) => (
             <article className="detail-card" key={block.title}>
@@ -154,7 +150,6 @@ export default function ChatAdminPage() {
           ))}
         </div>
 
-        {/* Functional admin console */}
         <section className="mt-8">
           <div className="grid gap-4 lg:grid-cols-[280px,1fr]">
             <aside className="detail-card">
@@ -202,9 +197,11 @@ export default function ChatAdminPage() {
                       <Link className="cta-button alt" href="/chat">
                         Open Chat
                       </Link>
-                      <Link className="cta-button alt" href="/admin">
+
+                      {/* IMPORTANT: protected route -> use <a> so it doesn't prefetch */}
+                      <a className="cta-button alt" href="/admin">
                         Open Admin
-                      </Link>
+                      </a>
                     </div>
                   </div>
 
@@ -223,7 +220,7 @@ export default function ChatAdminPage() {
                     ) : (
                       <div className="flex flex-col gap-2">
                         {messages.map((msg, i) => {
-                          const isAdmin = msg.sender === "admin"; // admin = LEFT/BLUE
+                          const isAdmin = msg.sender === "admin";
                           return (
                             <div
                               key={`${msg.timestamp}-${i}`}
@@ -283,9 +280,11 @@ export default function ChatAdminPage() {
           <Link className="cta-button" href="/chat">
             Open Chat
           </Link>
-          <Link className="cta-button alt" href="/admin">
+
+          {/* IMPORTANT: protected route -> use <a> */}
+          <a className="cta-button alt" href="/admin">
             Open Admin
-          </Link>
+          </a>
         </div>
       </PagePanel>
     </SiteShell>

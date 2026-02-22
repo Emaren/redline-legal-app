@@ -38,7 +38,6 @@ function apiUrl(path: string) {
 }
 
 function safeSessionId(): string {
-  // Prefer persisted session_id so the user stays in the same thread.
   try {
     const existing = localStorage.getItem("chat_session_id");
     if (existing) return existing;
@@ -92,7 +91,6 @@ export default function ChatPage() {
     }
   }, [historyUrl]);
 
-  // Poll chat
   useEffect(() => {
     if (!sessionId) return;
     fetchMessages();
@@ -100,7 +98,6 @@ export default function ChatPage() {
     return () => window.clearInterval(t);
   }, [sessionId, fetchMessages]);
 
-  // Auto-scroll on new messages
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -146,7 +143,6 @@ export default function ChatPage() {
         title="Chat Workspace"
         intro="Send a quick note and we’ll reply in this thread. For privacy, avoid sensitive personal identifiers unless requested."
       >
-        {/* Keep the new “channel” look */}
         <div className="detail-grid">
           {CHAT_CHANNELS.map((channel) => (
             <article className="detail-card" key={channel.title}>
@@ -156,7 +152,6 @@ export default function ChatPage() {
           ))}
         </div>
 
-        {/* Live chat (old functionality, new styling) */}
         <section className="mt-8">
           <div className="detail-card">
             <h3>Live Thread</h3>
@@ -180,7 +175,7 @@ export default function ChatPage() {
               ) : (
                 <div className="flex flex-col gap-2">
                   {messages.map((msg, i) => {
-                    const isAdmin = msg.sender === "admin"; // admin = LEFT/BLUE
+                    const isAdmin = msg.sender === "admin";
                     return (
                       <div
                         key={`${msg.timestamp}-${i}`}
@@ -240,10 +235,10 @@ export default function ChatPage() {
             Open Intake Thread
           </Link>
 
-          {/* IMPORTANT: protected route → prevent Next prefetch from triggering BasicAuth popup */}
-          <Link className="cta-button alt" href="/chat-admin" prefetch={false}>
+          {/* IMPORTANT: protected route -> use <a> (no Next prefetch / _rsc hit) */}
+          <a className="cta-button alt" href="/chat-admin">
             Go to Chat Admin
-          </Link>
+          </a>
         </div>
       </PagePanel>
     </SiteShell>
