@@ -15,7 +15,7 @@ const NAV_ITEMS = [
   { href: "/cookies", label: "Cookies" },
 ] as const;
 
-const PREFETCH_OFF = new Set<string>(["/admin", "/admin/", "/chat-admin", "/chat-admin/"]);
+const PROTECTED_ROUTES = new Set<string>(["/admin", "/chat-admin"]);
 
 function normalizeHref(href: string) {
   if (!href) return href;
@@ -23,9 +23,26 @@ function normalizeHref(href: string) {
   return href.replace(/\/+$/, "");
 }
 
-function shouldPrefetch(href: string) {
-  const normalized = normalizeHref(href);
-  return !PREFETCH_OFF.has(normalized) && !PREFETCH_OFF.has(`${normalized}/`);
+function isProtectedHref(href: string) {
+  return PROTECTED_ROUTES.has(normalizeHref(href));
+}
+
+function NavItem({ href, label }: { href: string; label: string }) {
+  // CRITICAL: never use next/link for protected routes.
+  // This prevents background Next RSC fetches like /admin?_rsc=... which trigger the Basic Auth popup.
+  if (isProtectedHref(href)) {
+    return (
+      <a className="nav-link" href={href} rel="nofollow">
+        {label}
+      </a>
+    );
+  }
+
+  return (
+    <Link className="nav-link" href={href}>
+      {label}
+    </Link>
+  );
 }
 
 export function SiteShell({ children }: { children: ReactNode }) {
@@ -54,14 +71,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
         <nav className="main-nav" aria-label="Primary navigation">
           {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              className="nav-link"
-              href={item.href}
-              prefetch={shouldPrefetch(item.href)}
-            >
-              {item.label}
-            </Link>
+            <NavItem key={item.href} href={item.href} label={item.label} />
           ))}
         </nav>
 
@@ -73,12 +83,15 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <footer className="site-footer">
         <p>© {year} Redline Legal. All rights reserved.</p>
         <div className="footer-links">
-          <Link className="footer-link" href="/admin" prefetch={false}>
+          {/* CRITICAL: plain <a> for protected route */}
+          <a className="footer-link" href="/admin" rel="nofollow">
             Admin
-          </Link>
+          </a>
+
           <Link className="footer-link" href="/cookies">
             Manage Cookies
           </Link>
+
           <a className="footer-link" href="mailto:contact@redlinelegal.ca">
             contact@redlinelegal.ca
           </a>

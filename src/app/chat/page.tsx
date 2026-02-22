@@ -235,8 +235,7 @@ export default function ChatPage() {
             Open Intake Thread
           </Link>
 
-          {/* IMPORTANT: protected route -> use <a> (no Next prefetch / _rsc hit) */}
-          <a className="cta-button alt" href="/chat-admin">
+          <a className="cta-button alt" href="/chat-admin" rel="nofollow">
             Go to Chat Admin
           </a>
         </div>

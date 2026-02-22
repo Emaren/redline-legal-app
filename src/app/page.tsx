@@ -39,7 +39,17 @@ const LINK_CARDS = [
   { href: "/cookies", title: "Cookies", body: "Cookie manager access and privacy controls." },
 ] as const;
 
-const PREFETCH_OFF = new Set<string>(["/admin", "/chat-admin"]);
+const PROTECTED_ROUTES = new Set<string>(["/admin", "/chat-admin"]);
+
+function normalizeHref(href: string) {
+  if (!href) return href;
+  if (href === "/") return "/";
+  return href.replace(/\/+$/, "");
+}
+
+function isProtectedHref(href: string) {
+  return PROTECTED_ROUTES.has(normalizeHref(href));
+}
 
 export default function HomePage() {
   return (
@@ -70,14 +80,18 @@ export default function HomePage() {
           <h2 className="section-heading">Everything currently available</h2>
           <div className="link-grid">
             {LINK_CARDS.map((item) => {
-              const protectedRoute = PREFETCH_OFF.has(item.href);
+              // CRITICAL: protected routes must be plain anchors (no next/link)
+              if (isProtectedHref(item.href)) {
+                return (
+                  <a key={item.href} className="link-card" href={item.href} rel="nofollow">
+                    <strong>{item.title}</strong>
+                    <span>{item.body}</span>
+                  </a>
+                );
+              }
+
               return (
-                <Link
-                  key={item.href}
-                  className="link-card"
-                  href={item.href}
-                  prefetch={protectedRoute ? false : true}
-                >
+                <Link key={item.href} className="link-card" href={item.href}>
                   <strong>{item.title}</strong>
                   <span>{item.body}</span>
                 </Link>
