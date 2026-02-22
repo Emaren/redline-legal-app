@@ -239,7 +239,9 @@ export default function ChatPage() {
           <Link className="cta-button" href="/contact">
             Open Intake Thread
           </Link>
-          <Link className="cta-button alt" href="/chat-admin">
+
+          {/* IMPORTANT: protected route → prevent Next prefetch from triggering BasicAuth popup */}
+          <Link className="cta-button alt" href="/chat-admin" prefetch={false}>
             Go to Chat Admin
           </Link>
         </div>
